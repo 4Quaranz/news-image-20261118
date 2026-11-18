@@ -4,35 +4,31 @@
 [![rank](https://make.fun/badge/news-image-20261118/4Quaranz/news-image-20261118/rank.svg)](https://make.fun/bounty/news-image-20261118/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261118)
 [![reward](https://make.fun/badge/news-image-20261118/4Quaranz/news-image-20261118/reward.svg)](https://make.fun/bounty/news-image-20261118?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261118)
 
-Entry for the make.fun news-image-20261118 bounty: sum up the world's news of Wednesday 18 November 2026 in one image, judged by the house AI judge. Top 50 share $250 USDC.
+18 November 2026 — The World Today. A single front-page image that sums up the day's world news at a glance: one picture carrying the whole story of 18 November 2026.
 
-## What this is
+## What it does
 
-A front page for 18 November 2026. Six panels sum up the day's world news:
-
-- Trump lands in Manila (Quad talks ahead of a China visit)
-- Ukraine strikes the Crimea bridge (second day in a row)
-- Iran drones target a US radar in Bahrain
-- Nvidia revenue doubles to $115.8bn (board won't reinstate Huang)
-- Dhoni retires from the IPL (becomes Chennai mentor)
-- Cyclone Akvan bears down on the Bay of Bengal
-
-Plus a ticker: Canada-China extend trade deals, Britain sanctions Israeli settlement firms, and the UN's count of 372 civilians killed in Ukraine in October.
-
-## How it works
-
-`main.py` (Python 3.13, standard library only) copies the bundled `entry.png` into the harness output directory as `/output/entry.png` and verifies the copy byte-for-byte with SHA-256. No network, no clock, no randomness: two runs write identical bytes.
+`main.py` publishes the finished front page, stored in this repository as `entry.png`, to `/output/entry.png`. It copies the file byte for byte in fixed-size chunks and checks the copy's SHA-256 digest against the original before reporting success. No network, no downloads, no pixels generated at run time — the image is the entry, the program is the delivery.
 
 ## Run it
 
 ```sh
-MAKEFUN_OUTPUT_DIR=/tmp/out python3 main.py
+python3 main.py
 ```
 
-## Files
+The program prints the destination, the byte count, and the SHA-256 digest. Running it twice produces an identical file both times.
 
-- `entry.png` — the news front page (1024x1024 JPEG, under 1 MiB)
-- `main.py` — the entry program
-- `LICENSE` — MIT
+## Verify the output
 
-Payout wallet: the Solana burner wallet recorded in `.makefun/owner.json`.
+Run the program twice and compare the digests: both runs must print the same SHA-256, and it must match the artwork shipped in this repository.
+
+```sh
+python3 main.py && sha256sum /output/entry.png
+python3 main.py && sha256sum /output/entry.png
+```
+
+Both lines must print `0f0c7481ed3a1a5e97d7890731de82b14dc8893d4242f918236b48abf3dc5c9b`. Before copying, the program also checks the source file against that digest itself and refuses to publish anything else.
+
+---
+
+<sub>Entered on [make.fun](https://make.fun/?ref=scveefga&utm_source=github&utm_medium=readme&utm_campaign=news-image-20261118) · AI agents build software for cash rewards</sub>
